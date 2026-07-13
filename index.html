@@ -40,7 +40,7 @@
   --ease-elastic:cubic-bezier(.34,1.56,.64,1);
   --ease-out:cubic-bezier(.2,.7,.2,1);
 }
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{
   background:var(--ink);color:var(--ink);
@@ -81,15 +81,6 @@ h2{font-size:clamp(2.2rem,6vw,4.6rem)}
 .pop.v{background:var(--violet)}.pop.p{background:var(--pink)}.pop.c{background:var(--cyan)}
 .pop.o{background:var(--orange)}.pop.m{background:var(--magenta)}
 .wave span{display:inline-block;will-change:transform}
-
-/* демо-метка */
-.tag{
-  display:inline-flex;align-items:center;gap:8px;font-family:var(--font-b);font-weight:700;
-  font-size:11.5px;letter-spacing:.04em;padding:6px 14px;border-radius:100px;
-  background:rgba(27,16,48,.08);border:2px dashed rgba(27,16,48,.25);
-}
-.p-ink .tag{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.28);color:var(--cream)}
-.tag::before{content:'★';color:var(--orange)}
 
 /* ---------- reveal (гейтится .js) ---------- */
 .rv,.rv-l,.rv-r,.rv-scale,.stag>*{transition:opacity .8s var(--ease-out),transform .8s var(--ease-out)}
@@ -152,17 +143,24 @@ header.hide{transform:translateY(-140%)}
   will-change:transform;
 }
 .btn-primary{background:var(--ink);color:var(--cream);box-shadow:0 6px 0 var(--violet)}
-.btn-primary:hover{box-shadow:0 10px 0 var(--violet);transform:translateY(-2px)}
-.btn-primary:active{box-shadow:0 2px 0 var(--violet);transform:translateY(2px)}
+.btn-primary:hover{background:var(--violet);color:#fff;box-shadow:0 10px 0 var(--ink);transform:translateY(-2px)}
+.btn-primary:active{box-shadow:0 2px 0 var(--ink);transform:translateY(2px)}
 .btn-lime{background:var(--lime);color:var(--ink);box-shadow:0 6px 0 var(--ink)}
-.btn-lime:hover{box-shadow:0 10px 0 var(--ink);transform:translateY(-2px)}
+.btn-lime:hover{background:var(--ink);color:var(--lime);box-shadow:0 10px 0 var(--pink);transform:translateY(-2px)}
 .btn-ghost{background:transparent;color:var(--ink);box-shadow:0 6px 0 rgba(27,16,48,.25)}
-.btn-ghost:hover{box-shadow:0 10px 0 rgba(27,16,48,.35);transform:translateY(-2px)}
+.btn-ghost:hover{background:var(--ink);color:var(--cream);box-shadow:0 10px 0 rgba(27,16,48,.35);transform:translateY(-2px)}
 .p-ink .btn-ghost{color:var(--cream);border-color:var(--cream);box-shadow:0 6px 0 rgba(255,255,255,.25)}
+.p-ink .btn-ghost:hover{background:var(--cream);color:var(--ink)}
 .btn-sm{padding:11px 20px;font-size:.85rem}
+/* «смешная» глубоко нажимающаяся синяя кнопка */
+.btn-push{background:var(--cyan);color:#fff;border-color:var(--ink);box-shadow:0 9px 0 #06566b;padding:18px 34px;font-size:1.05rem}
+.btn-push:hover{background:#0aa6d0;box-shadow:0 13px 0 #06566b;transform:translateY(-3px)}
+.btn-push:active{transform:translateY(8px);box-shadow:0 1px 0 #06566b}
+.btn-push.squish{animation:squish .5s var(--ease-elastic)}
+@keyframes squish{30%{transform:scale(1.12,.8) translateY(6px)}65%{transform:scale(.95,1.05)}}
 
 /* ---------- HERO ---------- */
-.hero{min-height:100svh;display:flex;align-items:center;padding:calc(var(--header-h) + 30px) 0 70px;overflow:hidden}
+.hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding:calc(var(--header-h) + 30px) 0 70px;overflow:hidden}
 #shapes{position:absolute;inset:0;z-index:0;width:100%;height:100%}
 .hero-inner{position:relative;z-index:2;width:100%}
 .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:40px;align-items:center}
@@ -171,12 +169,13 @@ header.hide{transform:translateY(-140%)}
   background:#fff;border:2px solid var(--ink);border-radius:100px;padding:8px 18px;margin-bottom:26px;
   box-shadow:0 5px 0 var(--lime)}
 .hero-badge .d{width:9px;height:9px;border-radius:50%;background:var(--orange);animation:pulse 1.4s ease infinite}
-.hero h1{font-size:clamp(2.9rem,9vw,7rem);font-weight:900;margin-bottom:26px}
+.hero h1{font-size:clamp(2.2rem,8vw,5.8rem);font-weight:900;margin-bottom:26px}
 .hero h1 .line{display:block;overflow:hidden}
+.hero h1 .word{display:inline-block;white-space:nowrap}
 .hero h1 .ch{display:inline-block;opacity:0;transform:translateY(115%) rotate(8deg)}
 .hero.loaded h1 .ch{animation:chIn .7s var(--ease-elastic) forwards}
 @keyframes chIn{to{opacity:1;transform:none}}
-.hero h1 .em{color:var(--violet);position:relative}
+.hero h1 .em{color:var(--violet);position:relative;display:inline-block;white-space:nowrap}
 .hero h1 .doodle{position:absolute;left:-2%;right:-2%;bottom:-.14em;height:.16em;
   background:var(--pink);border-radius:100px;transform:scaleX(0);transform-origin:left}
 .hero.loaded h1 .doodle{animation:draw .6s var(--ease-out) 1s forwards}
@@ -222,7 +221,6 @@ header.hide{transform:translateY(-140%)}
 .card:hover .ic{transform:rotate(-10deg) scale(1.08)}
 .card h3{font-size:1.3rem;margin-bottom:8px}
 .card p{color:var(--ink-soft);font-size:.96rem}
-.card .tag{margin-top:18px}
 .ic-v{background:var(--lav);color:var(--violet)}.ic-p{background:#ffe0ef;color:var(--pink)}
 .ic-c{background:var(--sky);color:var(--cyan)}.ic-o{background:var(--peach);color:var(--orange)}
 .ic-l{background:#eaffc7;color:#4d7c0f}.ic-m{background:#fbe2ff;color:var(--magenta)}
@@ -244,7 +242,8 @@ header.hide{transform:translateY(-140%)}
   border-radius:28px;overflow:hidden;user-select:none;transition:transform .4s var(--ease-elastic)}
 .jcard:hover{transform:translateY(-10px) rotate(-1.5deg)}
 .jcard .top{height:190px;display:grid;place-items:center;position:relative;overflow:hidden}
-.jcard .top svg{width:120px;height:120px;animation:spin 14s linear infinite}
+.jcard .top svg{width:120px;height:120px;animation:spin 14s linear infinite;transition:scale .55s var(--ease-elastic)}
+.jcard:hover .top svg{scale:1.28}
 .jcard:nth-child(even) .top svg{animation-direction:reverse}
 @keyframes spin{to{transform:rotate(360deg)}}
 .jcard .bd{padding:22px 24px 26px}
@@ -356,11 +355,70 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
 #toTop.show{opacity:1;pointer-events:auto;transform:none}
 @media(min-width:761px){#toTop{bottom:24px}}
 
+/* ---------- чипы с выпадающими стикерами (hero) ---------- */
+.chips{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:26px;font-weight:700;font-size:.92rem}
+.chips-cap{color:var(--ink-soft);font-weight:500}
+.chip{position:relative;border:2px solid var(--ink);border-radius:100px;padding:7px 16px;background:#fff;
+  transition:transform .25s var(--ease-elastic),background .25s}
+.chip:hover{transform:translateY(-3px) rotate(-2deg);background:var(--lav)}
+.chip .drop{position:absolute;left:50%;top:calc(100% + 8px);z-index:6;pointer-events:none;opacity:0;
+  transform:translate(-50%,-18px) rotate(-16deg) scale(.4);
+  transition:transform .5s var(--ease-elastic),opacity .2s}
+.chip:hover .drop{opacity:1;transform:translate(-50%,0) rotate(4deg) scale(1)}
+.chip .drop svg{width:56px;height:56px;filter:drop-shadow(0 6px 0 rgba(27,16,48,.2))}
+
+/* ---------- листок, поднимающийся «со стола» (контакт) ---------- */
+.cta-card .paper{position:absolute;right:38px;top:28px;width:112px;z-index:1;opacity:0;
+  transform:perspective(520px) rotateX(72deg) translateY(48px);transform-origin:bottom center;
+  transition:transform .95s var(--ease-elastic) .25s,opacity .5s ease .25s}
+.cta-card.in .paper{opacity:1;transform:none}
+@media(max-width:880px){.cta-card .paper{display:none}}
+
+/* ---------- сборка сайта по скроллу ---------- */
+.b-tall{height:280vh}
+.b-sticky{position:sticky;top:0;min-height:100vh;min-height:100svh;display:flex;align-items:center;overflow:hidden}
+.b-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,60px);align-items:center;width:100%}
+@media(max-width:880px){.b-grid{grid-template-columns:1fr;gap:10px}.b-stage svg{max-height:42vh}}
+.b-stage{display:grid;place-items:center}
+.b-stage svg{width:min(430px,92%);height:auto;overflow:visible}
+.b-pct{margin-top:22px;font-weight:700;color:var(--ink-soft)}
+.b-pct b{font-family:var(--font-d);color:var(--cyan);font-size:1.35rem;margin-left:6px}
+.js #bh-base,.js #bh-mid,.js #bh-top,.js #bh-roof,.js #bh-done{opacity:0;will-change:transform,opacity}
+
+/* ---------- демо кинетического текста в карточке ---------- */
+.kin-demo{margin-top:18px;font-family:var(--font-d);font-weight:700;font-size:1.02rem;display:flex;gap:8px;align-items:baseline}
+.kin-slot{display:inline-block;overflow:hidden;position:relative;min-width:9em;height:1.35em;vertical-align:baseline}
+.kin-word{position:absolute;left:0;top:0;color:var(--violet);transition:transform .45s var(--ease-elastic),opacity .3s}
+.kin-word.out{transform:translateY(125%);opacity:0;transition:transform .28s ease-in,opacity .28s}
+.kin-word.pre{transform:translateY(-135%);opacity:0;transition:none}
+.wl{display:inline-block}
+#cardKinetic:hover .wl{animation:hop .55s var(--ease-elastic)}
+@keyframes hop{40%{transform:translateY(-9px) rotate(-4deg)}}
+
+/* ---------- курсор-сюрприз на карточке «Кастомный курсор» ---------- */
+#cursor.fun{width:58px;height:58px;border-radius:16px;background:var(--lime);border-color:var(--ink);mix-blend-mode:normal}
+#cursor.fun::after{content:'✳';position:absolute;inset:0;display:grid;place-items:center;font-size:24px;color:var(--ink);
+  mix-blend-mode:normal;animation:spin 2.4s linear infinite}
+
+/* ---------- переигрывание столбиков в цифрах ---------- */
+.nbox.reset .spark i{transform:scaleY(0)!important;transition:none!important}
+
+/* ---------- тач: hover-эффекты не залипают ---------- */
+@media(hover:none){
+  .card:hover,.jcard:hover,.plan:hover,.msgr:hover,.chip:hover,.step:hover{transform:none}
+  .jcard:hover .top svg{scale:1}
+  .card:hover .ic{transform:none}
+  .chip .drop{display:none}
+}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
   .js .rv,.js .rv-l,.js .rv-r,.js .rv-scale,.js .stag>*{opacity:1!important;transform:none!important}
   .hero h1 .ch{opacity:1!important;transform:none!important}
+  .b-tall{height:auto}
+  .b-sticky{position:static}
+  .js #bh-base,.js #bh-mid,.js #bh-top,.js #bh-roof,.js #bh-done{opacity:1!important;transform:none!important}
 }
 </style>
 </head>
@@ -401,6 +459,21 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
           <a class="btn btn-primary" href="#contact" data-magnetic data-cursor data-goal="hero_cta">Хочу вау-сайт →</a>
           <a class="btn btn-ghost" href="#play" data-magnetic data-cursor>Показать фишки</a>
         </div>
+        <div class="chips">
+          <span class="chips-cap">делаем для:</span>
+          <span class="chip">кофеен<span class="drop" aria-hidden="true">
+            <svg viewBox="0 0 56 56" fill="none"><rect x="10" y="20" width="28" height="24" rx="8" fill="#FFF4E0" stroke="#1B1030" stroke-width="3"/><path d="M38 26h5a6 6 0 0 1 0 12h-5" stroke="#1B1030" stroke-width="3"/><path d="M18 14c0-3 3-3 3-6M27 14c0-3 3-3 3-6" stroke="#EA580C" stroke-width="3" stroke-linecap="round"/><rect x="10" y="30" width="28" height="5" fill="#EC4899"/></svg>
+          </span></span>
+          <span class="chip">барберов<span class="drop" aria-hidden="true">
+            <svg viewBox="0 0 56 56" fill="none"><circle cx="16" cy="40" r="7" stroke="#1B1030" stroke-width="3" fill="#A3E635"/><circle cx="40" cy="40" r="7" stroke="#1B1030" stroke-width="3" fill="#A3E635"/><path d="m19 34 22-24M37 34 15 10" stroke="#1B1030" stroke-width="3.5" stroke-linecap="round"/><circle cx="28" cy="23" r="3" fill="#EC4899"/></svg>
+          </span></span>
+          <span class="chip">автосервисов<span class="drop" aria-hidden="true">
+            <svg viewBox="0 0 56 56" fill="none"><path d="M8 34c0-4 3-6 6-6l4-8c1-2 3-3 5-3h10c2 0 4 1 5 3l4 8c3 0 6 2 6 6v6H8v-6Z" fill="#7C3AED" stroke="#1B1030" stroke-width="3"/><circle cx="18" cy="42" r="6" fill="#FFF4E0" stroke="#1B1030" stroke-width="3"/><circle cx="38" cy="42" r="6" fill="#FFF4E0" stroke="#1B1030" stroke-width="3"/><rect x="22" y="22" width="12" height="6" rx="3" fill="#D6F0FF"/></svg>
+          </span></span>
+          <span class="chip">доставки<span class="drop" aria-hidden="true">
+            <svg viewBox="0 0 56 56" fill="none"><rect x="10" y="18" width="36" height="28" rx="6" fill="#FFE2C6" stroke="#1B1030" stroke-width="3"/><path d="M10 28h36M28 18v28" stroke="#1B1030" stroke-width="3"/><path d="M20 10h16l4 8H16l4-8Z" fill="#EA580C" stroke="#1B1030" stroke-width="3"/><circle cx="28" cy="38" r="4" fill="#EC4899"/></svg>
+          </span></span>
+        </div>
       </div>
       <div class="mascot-wrap" data-parallax="0.35">
         <div class="mascot-speech">привет! 👋</div>
@@ -440,46 +513,41 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
       <p class="lead">Каждая карточка реагирует на тебя. На телефоне — мягко появляется при скролле и остаётся удобной.</p>
     </div>
     <div class="play-grid stag">
-      <div class="card" data-cursor>
+      <div class="card" data-cursor id="cardKinetic">
         <div class="ic ic-v" style="color:var(--violet)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
         <h3>Кинетический текст</h3>
         <p>Заголовки прыгают, буквы оживают, важное — подчёркнуто анимацией. Взгляд цепляется за секунду.</p>
-        <span class="tag">приём: буквы по одной</span>
+        <div class="kin-demo" aria-hidden="true">ваш сайт <span class="kin-slot"><span class="kin-word" id="kinWord">продаёт</span></span></div>
         <div class="blob-deco" style="color:var(--violet)"></div>
       </div>
       <div class="card" data-cursor>
         <div class="ic ic-p" style="color:var(--pink)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="10" r="1.4" fill="currentColor"/><circle cx="15" cy="10" r="1.4" fill="currentColor"/><path d="M8.5 15c2 1.6 5 1.6 7 0"/></svg></div>
         <h3>Живой маскот</h3>
         <p>Персонаж следит за курсором, моргает и машет. Бренд, который вызывает улыбку и запоминается.</p>
-        <span class="tag">приём: глаза за мышкой</span>
         <div class="blob-deco" style="color:var(--pink)"></div>
       </div>
-      <div class="card" data-cursor>
+      <div class="card" id="cardCursor">
         <div class="ic ic-c" style="color:var(--cyan)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m4 4 7 16 2-7 7-2z"/></svg></div>
         <h3>Кастомный курсор</h3>
-        <p>Свой курсор, который растёт на кнопках и подсказывает действие. Мелочь, от которой сайт кажется дорогим.</p>
-        <span class="tag">приём: курсор с подписью</span>
+        <p>Свой курсор, который растёт на кнопках и подсказывает действие. Наведите сюда — он изменится. Мелочь, от которой сайт кажется дорогим.</p>
         <div class="blob-deco" style="color:var(--cyan)"></div>
       </div>
       <div class="card" data-cursor>
         <div class="ic ic-o" style="color:var(--orange)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>
         <h3>Анимации при скролле</h3>
         <p>Блоки въезжают, цифры считаются, фигуры плывут с параллаксом. Сайт рассказывает историю, пока листаешь.</p>
-        <span class="tag">приём: reveal + параллакс</span>
         <div class="blob-deco" style="color:var(--orange)"></div>
       </div>
       <div class="card" data-cursor>
         <div class="ic ic-l" style="color:#4d7c0f"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M21 11.5a8.5 8.5 0 1 1-4.4-7.4L21 3l-1.1 4.4A8.4 8.4 0 0 1 21 11.5z"/></svg></div>
         <h3>Заявки в WhatsApp</h3>
         <p>Форма без сервера: клиент жмёт кнопку — у вас открывается чат с готовым текстом заявки. Плюс конфетти за старание.</p>
-        <span class="tag">приём: форма + салют</span>
         <div class="blob-deco" style="color:#4d7c0f"></div>
       </div>
       <div class="card" data-cursor>
         <div class="ic ic-m" style="color:var(--magenta)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M4 10h16M10 20V10"/></svg></div>
         <h3>Свой стиль под бизнес</h3>
         <p>Палитра, шрифт и характер маскота — под вас. Барбершоп, кофейня и автосервис не должны быть на одно лицо.</p>
-        <span class="tag">приём: не шаблон</span>
         <div class="blob-deco" style="color:var(--magenta)"></div>
       </div>
     </div>
@@ -491,7 +559,7 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
   <div class="wrap">
     <div class="jungle-head rv">
       <div>
-        <div class="kicker" style="color:var(--lime)">02 — джунгли форм</div>
+        <div class="kicker" style="color:var(--lime)">02 — витрина ниш</div>
         <h2>Тяни вбок —<br>тут <span class="pop o">движется</span> всё</h2>
         <p class="lead" style="color:rgba(255,244,224,.75)">Горизонтальный слайдер тянется мышкой и пальцем. Ниши — для примера: так можно подать любой бизнес.</p>
       </div>
@@ -526,10 +594,7 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
         <div class="bd"><span class="em" style="background:#fbe2ff;color:var(--magenta)">красота</span><h3>Ногтевая студия</h3><p>Портфолио работ, мастера, онлайн-запись.</p></div>
       </article>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:6px">
-      <div class="jbar"><i id="jBar"></i></div>
-      <span class="tag">приём: слайдер с drag</span>
-    </div>
+    <div class="jbar" style="margin-top:6px"><i id="jBar"></i></div>
   </div>
 </section>
 
@@ -569,11 +634,63 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
   </div>
 </section>
 
+<!-- ================= BUILDER: сайт собирается по скроллу ================= -->
+<section class="panel p-sky" id="builder" style="padding:0">
+  <div class="b-tall" id="builderTall">
+    <div class="b-sticky">
+      <div class="wrap b-grid">
+        <div>
+          <div class="kicker" style="color:var(--cyan)">05 — сборка</div>
+          <h2>Сайт собирается<br>у вас <span class="pop c">на глазах</span></h2>
+          <p class="lead">Листайте медленно — блоки встают на место сами: фундамент, контент, шапка. Ровно так мы и работаем.</p>
+          <div class="b-pct" aria-hidden="true">собрано:<b id="bPct">0%</b></div>
+        </div>
+        <div class="b-stage">
+          <svg viewBox="0 0 340 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Сайт собирается блок за блоком">
+            <g id="bh-base">
+              <rect x="30" y="300" width="280" height="42" rx="14" fill="#1B1030"/>
+              <rect x="115" y="313" width="110" height="16" rx="8" fill="#A3E635"/>
+              <circle cx="70" cy="321" r="7" fill="#EC4899"/>
+              <circle cx="270" cy="321" r="7" fill="#22d3ee" opacity=".8"/>
+            </g>
+            <g id="bh-mid">
+              <rect x="40" y="222" width="260" height="70" rx="14" fill="#fff" stroke="#1B1030" stroke-width="3"/>
+              <rect x="58" y="240" width="122" height="11" rx="5.5" fill="#7C3AED"/>
+              <rect x="58" y="260" width="184" height="8" rx="4" fill="#CBBFE6"/>
+              <rect x="58" y="274" width="150" height="8" rx="4" fill="#CBBFE6"/>
+            </g>
+            <g id="bh-top">
+              <rect x="40" y="144" width="260" height="70" rx="14" fill="#fff" stroke="#1B1030" stroke-width="3"/>
+              <circle cx="80" cy="179" r="21" fill="#EC4899"/>
+              <path d="M72 179l6 6 11-12" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="116" y="162" width="124" height="11" rx="5.5" fill="#1B1030"/>
+              <rect x="116" y="182" width="152" height="8" rx="4" fill="#CBBFE6"/>
+            </g>
+            <g id="bh-roof">
+              <path d="M170 42 306 136H34L170 42Z" fill="#7C3AED" stroke="#1B1030" stroke-width="3" stroke-linejoin="round"/>
+              <circle cx="170" cy="104" r="17" fill="#FFF4E0"/>
+              <path d="M170 94l3.6 5.8 6.6 1-4.8 4.9 1.1 6.7-6.5-3.2-6.5 3.2 1.1-6.7-4.8-4.9 6.6-1L170 94Z" fill="#EA580C"/>
+            </g>
+            <g id="bh-done">
+              <rect x="244" y="8" width="86" height="30" rx="15" fill="#A3E635" stroke="#1B1030" stroke-width="3"/>
+              <text x="287" y="29" text-anchor="middle" font-family="Manrope,system-ui,sans-serif" font-weight="700" font-size="14" fill="#1B1030">готово!</text>
+              <circle cx="230" cy="52" r="5" fill="#EC4899"/>
+              <circle cx="256" cy="66" r="4" fill="#22d3ee"/>
+              <circle cx="214" cy="30" r="4" fill="#EA580C"/>
+              <path d="M38 262c-14-2-22 8-20 20 8-3 16-10 20-20Z" fill="#A3E635" stroke="#1B1030" stroke-width="2.5"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= PLANS ================= -->
 <section class="panel p-cream" id="plans">
   <div class="wrap">
     <div class="sec-head rv">
-      <div class="kicker" style="color:var(--violet)">05 — тарифы</div>
+      <div class="kicker" style="color:var(--violet)">06 — тарифы</div>
       <h2>Честные <span class="pop v">цены</span></h2>
       <p class="lead">Ориентир «от», финал — после брифа. Без ежемесячной абонентки: заплатили раз — сайт ваш.</p>
     </div>
@@ -587,13 +704,13 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
       <div class="plan hot">
         <div class="badge">вау-тариф ★</div>
         <div class="pname">Характер</div>
-        <div class="price">от 35 000 ₽<small> / разово</small></div>
-        <ul><li>Всё из «Старта»</li><li>Маскот и кинетический текст</li><li>Кастомный курсор и параллакс</li><li>Слайдеры, конфетти, микроанимации</li><li>3 круга правок</li></ul>
+        <div class="price">от 25 000 ₽<small> / разово</small></div>
+        <ul><li>Всё из «Старта»</li><li>Маскот и кинетический текст</li><li>Кастомный курсор и параллакс</li><li>Слайдеры, конфетти, микроанимации</li><li>Запуск на вашем домене</li></ul>
         <a class="btn btn-lime" href="#contact" data-magnetic data-cursor data-goal="plan_char">Хочу характер</a>
       </div>
       <div class="plan">
         <div class="pname">Редизайн</div>
-        <div class="price">от 25 000 ₽<small> / разово</small></div>
+        <div class="price">от 15 000 ₽<small> / разово</small></div>
         <ul><li>Разбор текущего сайта</li><li>Новый дизайн с нуля</li><li>Перенос и сверка всех фактов</li><li>Сравнение до/после</li></ul>
         <a class="btn btn-ghost" href="#contact" data-magnetic data-cursor data-goal="plan_redesign">Выбрать</a>
       </div>
@@ -606,7 +723,7 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
 <section class="panel p-sky" id="faq">
   <div class="wrap">
     <div class="sec-head rv" style="text-align:center;max-width:660px;margin-left:auto;margin-right:auto">
-      <div class="kicker" style="color:var(--cyan);justify-content:center">06 — вопросы</div>
+      <div class="kicker" style="color:var(--cyan);justify-content:center">07 — вопросы</div>
       <h2>Частые <span class="pop c">вопросы</span></h2>
       <p class="lead" style="margin-left:auto;margin-right:auto">Аккордеон раскрывается плавно — и поисковики читают эти ответы благодаря разметке.</p>
     </div>
@@ -625,8 +742,18 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
   <div class="wrap">
     <div class="cta-card rv">
       <canvas id="confetti" aria-hidden="true" style="position:absolute;inset:0;z-index:0;pointer-events:none"></canvas>
+      <svg class="paper" viewBox="0 0 120 150" aria-hidden="true">
+        <rect x="8" y="8" width="104" height="134" rx="10" fill="#FFF4E0" stroke="#1B1030" stroke-width="3"/>
+        <rect x="24" y="30" width="72" height="9" rx="4.5" fill="#7C3AED"/>
+        <rect x="24" y="50" width="56" height="6" rx="3" fill="#CBBFE6"/>
+        <rect x="24" y="64" width="64" height="6" rx="3" fill="#CBBFE6"/>
+        <rect x="24" y="78" width="48" height="6" rx="3" fill="#CBBFE6"/>
+        <rect x="24" y="100" width="48" height="17" rx="8.5" fill="#A3E635" stroke="#1B1030" stroke-width="2"/>
+        <circle cx="93" cy="112" r="13" fill="#EC4899" opacity=".9"/>
+        <path d="M87 112l4.5 4.5 8-9" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       <div style="position:relative;z-index:2">
-        <div class="kicker" style="color:var(--lime)">07 — контакт</div>
+        <div class="kicker" style="color:var(--lime)">08 — контакт</div>
         <h2>Сделаем ваш<br><span class="pop o">вау-сайт?</span></h2>
         <p class="lead">Расскажите пару слов о бизнесе — предложим идею и покажем демо через 48 часов. Бесплатно и ни к чему не обязывает.</p>
         <div class="messengers">
@@ -637,13 +764,13 @@ footer{background:var(--ink);color:rgba(255,244,224,.7);padding:40px 0 120px;fon
       </div>
       <form class="form" id="leadForm" novalidate style="position:relative;z-index:2">
         <div><label for="fName">Как вас зовут</label><input id="fName" name="name" type="text" placeholder="Имя" required></div>
-        <div><label for="fPhone">Телефон</label><input id="fPhone" name="phone" type="tel" value="+7 " placeholder="+7 900 000-00-00" required pattern="\+?[0-9\s\-]{10,16}" inputmode="tel"></div>
+        <div><label for="fPhone">Телефон</label><input id="fPhone" name="phone" type="tel" value="+7 " placeholder="+7 922 454 4432" required pattern="\+?[0-9\s\-]{10,16}" inputmode="tel" autocomplete="tel"></div>
         <div><label for="fBiz">Что за бизнес</label>
           <select id="fBiz" name="biz">
             <option>Кофейня / еда</option><option>Красота и здоровье</option><option>Авто-услуги</option><option>Спорт / студия</option><option>Другое</option>
           </select>
         </div>
-        <button class="btn btn-lime" type="submit" data-magnetic data-cursor data-goal="form_submit">Получить демо за 48 часов 🎉</button>
+        <button class="btn btn-push" type="submit" data-cursor data-goal="form_submit">Получить демо за 48 часов 🎉</button>
         <p class="note">Кнопка просто открывает WhatsApp с текстом заявки — никаких баз данных и спама.</p>
       </form>
     </div>
@@ -686,35 +813,27 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const canHover = matchMedia('(hover:hover)').matches && innerWidth>900;
 const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>[...(r||document).querySelectorAll(s)];
 
-/* ---------- split hero заголовка на буквы ---------- */
-$$('#heroTitle .line').forEach(line=>{
-  const html=line.innerHTML;
-  // разбиваем только текстовые узлы верхнего уровня, оставляя вложенный .em/.doodle
-  [...line.childNodes].forEach(node=>{
+/* ---------- split hero заголовка: слова → буквы (слово не рвётся посреди строки) ---------- */
+function splitToWords(el){
+  [...el.childNodes].forEach(node=>{
     if(node.nodeType===3){
       const frag=document.createDocumentFragment();
-      node.textContent.split('').forEach(c=>{
-        const s=document.createElement('span');
-        s.className='ch'; s.textContent=c;
-        if(c===' ') s.innerHTML='&nbsp;';
-        frag.appendChild(s);
+      node.textContent.split(/(\s+)/).forEach(tok=>{
+        if(!tok) return;
+        if(/^\s+$/.test(tok)){ frag.appendChild(document.createTextNode(' ')); return; }
+        const w=document.createElement('span'); w.className='word';
+        tok.split('').forEach(c=>{
+          const s=document.createElement('span'); s.className='ch'; s.textContent=c; w.appendChild(s);
+        });
+        frag.appendChild(w);
       });
-      line.replaceChild(frag,node);
-    } else if(node.nodeType===1){
-      // .em: разбить его текст тоже (кроме .doodle)
-      [...node.childNodes].forEach(inner=>{
-        if(inner.nodeType===3){
-          const frag=document.createDocumentFragment();
-          inner.textContent.split('').forEach(c=>{
-            const s=document.createElement('span'); s.className='ch'; s.textContent=c;
-            if(c===' ') s.innerHTML='&nbsp;'; frag.appendChild(s);
-          });
-          node.replaceChild(frag,inner);
-        }
-      });
+      el.replaceChild(frag,node);
+    } else if(node.nodeType===1 && !node.classList.contains('doodle')){
+      splitToWords(node);
     }
   });
-});
+}
+$$('#heroTitle .line').forEach(splitToWords);
 $$('#heroTitle .ch').forEach((ch,i)=>{ ch.style.animationDelay=(0.25+i*0.03)+'s'; });
 requestAnimationFrame(()=>$('.hero').classList.add('loaded'));
 
@@ -835,13 +954,100 @@ $$('#play .card').forEach(card=>{
   card.addEventListener('pointerleave',spring);
 });
 
-/* ---------- телефон: префикс +7 и каретка в конце ---------- */
+/* ---------- телефон: нестираемый +7 и автопробелы (+7 922 454 4432) ---------- */
 (function(){
   const ph=$('#fPhone');if(!ph)return;
-  const toEnd=()=>{try{const n=ph.value.length;ph.setSelectionRange(n,n);}catch(_){}};
-  const ensure=()=>{if(!ph.value.trim()||!ph.value.startsWith('+7'))ph.value='+7 ';};
-  ph.addEventListener('focus',()=>{ensure();requestAnimationFrame(toEnd);});
-  ph.addEventListener('pointerup',()=>requestAnimationFrame(toEnd));
+  const fmt=v=>{
+    let d=v.replace(/\D/g,'');
+    if(d[0]==='7'||d[0]==='8')d=d.slice(1);
+    d=d.slice(0,10);
+    let out='+7 ';
+    if(d.length)out+=d.slice(0,3);
+    if(d.length>3)out+=' '+d.slice(3,6);
+    if(d.length>6)out+=' '+d.slice(6);
+    return out;
+  };
+  const toEnd=()=>{const n=ph.value.length;try{ph.setSelectionRange(n,n);}catch(_){}};
+  ph.addEventListener('input',()=>{ph.value=fmt(ph.value);toEnd();});
+  ph.addEventListener('focus',()=>{ph.value=fmt(ph.value);requestAnimationFrame(toEnd);});
+  ph.addEventListener('keydown',e=>{ // «+7 » не стирается
+    if((e.key==='Backspace'||e.key==='Delete')&&ph.selectionStart<=3&&ph.selectionEnd<=3)e.preventDefault();
+  });
+  ph.addEventListener('pointerup',()=>{if(ph.selectionStart<3)toEnd();});
+})();
+
+/* ---------- цифры: переигрывать столбики при наведении ---------- */
+$$('.nbox').forEach(b=>{
+  b.addEventListener('pointerenter',()=>{
+    if(!$('#numGrid').classList.contains('in'))return;
+    b.classList.add('reset');void b.offsetWidth;b.classList.remove('reset');
+  });
+});
+
+/* ---------- кинетик-демо: слова выпадают и сменяются ---------- */
+(function(){
+  const w=$('#kinWord');if(!w||reduced)return;
+  const words=['продаёт','запоминается','цепляет','улыбает','работает'];
+  const colors=['#7C3AED','#EC4899','#0891B2','#EA580C','#D946EF'];
+  let i=0;
+  setInterval(()=>{
+    w.classList.add('out');
+    setTimeout(()=>{
+      i=(i+1)%words.length;
+      w.textContent=words[i];w.style.color=colors[i];
+      w.classList.remove('out');w.classList.add('pre');
+      void w.offsetWidth;
+      w.classList.remove('pre');
+    },300);
+  },2300);
+})();
+
+/* ---------- заголовок кинетик-карточки: буквы прыгают при наведении ---------- */
+(function(){
+  const h=$('#cardKinetic h3');if(!h)return;
+  h.innerHTML=h.textContent.split('').map((c,i)=>
+    `<span class="wl" style="animation-delay:${i*35}ms">${c===' '?'&nbsp;':c}</span>`).join('');
+})();
+
+/* ---------- карточка «Кастомный курсор»: курсор превращается ---------- */
+(function(){
+  const cf=$('#cardCursor'),cur=$('#cursor');
+  if(!cf||!cur||!canHover)return;
+  cf.addEventListener('pointerenter',()=>cur.classList.add('fun'));
+  cf.addEventListener('pointerleave',()=>cur.classList.remove('fun'));
+})();
+
+/* ---------- смешная нажимающаяся кнопка: сквиш при клике ---------- */
+$$('.btn-push').forEach(b=>{
+  b.addEventListener('click',()=>{
+    b.classList.remove('squish');void b.offsetWidth;b.classList.add('squish');
+  });
+  b.addEventListener('animationend',()=>b.classList.remove('squish'));
+});
+
+/* ---------- сборка сайта по скроллу ---------- */
+(function(){
+  const tall=$('#builderTall');if(!tall)return;
+  const parts=[['#bh-base',.02,.24],['#bh-mid',.22,.46],['#bh-top',.44,.66],['#bh-roof',.62,.82],['#bh-done',.82,.96]]
+    .map(([s,a,b])=>[$(s),a,b]).filter(([el])=>el);
+  const pct=$('#bPct');
+  const back=t=>{const c=1.70158;return 1+(c+1)*Math.pow(t-1,3)+c*Math.pow(t-1,2)};
+  function bTick(){
+    const r=tall.getBoundingClientRect();
+    const total=r.height-innerHeight;
+    const p=Math.max(0,Math.min(1,-r.top/(total||1)));
+    parts.forEach(([el,a,b])=>{
+      const q=Math.max(0,Math.min(1,(p-a)/(b-a)));
+      if(reduced){el.style.opacity=1;el.style.transform='none';return;}
+      el.style.opacity=q===0?0:Math.min(1,q*2.2);
+      el.style.transform=`translateY(${((1-back(q))*70).toFixed(1)}px)`;
+    });
+    if(pct)pct.textContent=Math.round(p*100)+'%';
+  }
+  let tk=false;
+  addEventListener('scroll',()=>{if(!tk){tk=true;requestAnimationFrame(()=>{bTick();tk=false;});}},{passive:true});
+  addEventListener('resize',bTick,{passive:true});
+  bTick();
 })();
 
 /* ---------- canvas: плавающие фигуры (hero) ---------- */
@@ -934,7 +1140,7 @@ function showToast(html){toast.innerHTML=html;toast.classList.add('show');clearT
 form.addEventListener('submit',e=>{
   e.preventDefault();
   const name=form.name.value.trim(),phone=form.phone.value.trim();
-  if(!name||!phone||!form.phone.checkValidity()){showToast('Заполните <b>имя</b> и <b>телефон</b> — и заявка улетит в WhatsApp.');return;}
+  if(!name||phone.replace(/\D/g,'').length<11||!form.phone.checkValidity()){showToast('Заполните <b>имя</b> и <b>телефон целиком</b> — и заявка улетит в WhatsApp.');return;}
   const text=encodeURIComponent(`Здравствуйте! Хочу вау-сайт.\nИмя: ${name}\nТелефон: ${phone}\nБизнес: ${form.biz.value}`);
   confetti();
   showToast('<b>Демо:</b> на боевом сайте сейчас открылся бы WhatsApp с готовым текстом заявки. Механика работает ✓');
